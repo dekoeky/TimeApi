@@ -1,0 +1,52 @@
+
+name: Build & Test .NET Code
+
+on:
+  #Run for every push on every branch:
+  push:
+    branches:
+      main
+      development
+      feature/actions
+
+  #Run when sheduled manually:
+  workflow_dispatch:
+
+jobs:
+  build-and-test-linux:
+    name: Build & Test on Linux
+    runs-on: ubuntu-latest
+    # strategy:
+    #   matrix:
+    #     dotnet-version: [ '6.0.x', '7.0.x' ]
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+
+  build-and-test-windows: 
+    name: Build & Test on Windows
+    runs-on: windows-latest
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      
