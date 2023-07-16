@@ -22,4 +22,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapGet("", () => "TimeApi root");
+
 app.Run();
