@@ -20,6 +20,9 @@ public class TimeController : ControllerBase
     [HttpGet("Utc", Name = nameof(GetUtcTime))]
     public DateTime GetUtcTime() => DateTime.UtcNow;
 
+    [HttpGet("", Name = nameof(GetTime))]
+    public IActionResult GetTime() => Redirect(Request.Path + "/Local");
+
     //TODO: TimeZone Info
     //TODO: DateTimeOffset
     //TODO: DateOnly
