@@ -9,9 +9,10 @@ on:
   # schedule:
   #   - cron: '24 18 * * *'
   push:
-    branches: [ "main", "development", "feature/actions" ]
+    branches: [ "main", "development", "develop" ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
+
   pull_request:
     branches: [ "main" ]
 
@@ -69,7 +70,7 @@ jobs:
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
-      - name: Build and push Docker image
+      - name: 🛠️ Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
@@ -87,7 +88,7 @@ jobs:
       # repository is public to avoid leaking data.  If you would like to publish
       # transparency data even for private images, pass --force to cosign below.
       # https://github.com/sigstore/cosign
-      - name: Sign the published Docker image
+      - name: ✍️ Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
           # https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
