@@ -11,10 +11,16 @@ on:
 
   #Run when sheduled manually:
   workflow_dispatch:
+    
+  # With pull requests
+  pull_request:
+    branches: [ "main", "development", "develop"]
+
+
 
 jobs:
   build-and-test-linux:
-    name: Build & Test on Linux
+    name: 🛠️ Build & Test on Linux
     runs-on: ubuntu-latest
     # strategy:
     #   matrix:
@@ -34,7 +40,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
 
   build-and-test-windows: 
-    name: Build & Test on Windows
+    name: 🛠️ Build & Test on Windows
     runs-on: windows-latest
     steps:
     - name: Checkout the code
