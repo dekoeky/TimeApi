@@ -18,7 +18,7 @@ RUN dotnet publish "TimeApi.csproj" -c Release -o /app/publish /p:UseAppHost=fal
 
 FROM base AS final
 LABEL org.opencontainers.image.description="A simple rest api that returns time information"
-LABEL test.label.value="Test 003"
+LABEL test.label.value="Test 004"
 LABEL description="Some Description 🐱‍💻"
 WORKDIR /app
 COPY --from=publish /app/publish .
