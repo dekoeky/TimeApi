@@ -75,7 +75,7 @@ jobs:
         with:
           images: |
             ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
-            docker.io/${{ env.DOCKERHUB_NAMESPACE }}/${{ env.IMAGE_NAME }}
+            docker.io/${{ vars.DOCKERHUB_NAMESPACE }}/${{ env.IMAGE_NAME }}
             
           tags: |
             latest
