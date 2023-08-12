@@ -5,6 +5,7 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 LABEL org.opencontainers.image.description A simple rest api that returns time information
+LABEL test.label.value="Test 001"
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
