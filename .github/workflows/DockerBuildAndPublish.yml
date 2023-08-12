@@ -24,9 +24,6 @@ env:
   # # github.repository as <account>/<repo>
   # IMAGE_NAME: ${{ github.repository }}$
   IMAGE_NAME: "timeapi"
-  GHCR_IMAGE_NAME: ${{ github.repository_owner }}/${{ IMAGE_NAME }}
-  DOCKERHUB_IMAGE_NAME: ${{ env.DOCKERHUB_NAMESPACE }}/${{ IMAGE_NAME }}
-
 
 jobs:
   build:
@@ -83,7 +80,7 @@ jobs:
           tags: |
             latest
             ${{ github.run_id }}
-            
+
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: 🛠️ Build and push Docker image
