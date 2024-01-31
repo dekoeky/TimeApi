@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 
-//TODO: File Scoped Namespace
 namespace TimeApi.Controllers;
 
 [ApiController]
