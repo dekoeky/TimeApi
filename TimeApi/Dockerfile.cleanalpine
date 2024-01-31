@@ -1,0 +1,35 @@
+#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+#FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM alpine AS base
+
+RUN apk add --no-cache \ 
+    openssh libunwind \
+    nghttp2-libs libidn krb5-libs libuuid lttng-ust zlib \
+    libstdc++ libintl \
+    icu
+
+WORKDIR /app
+EXPOSE 8080
+EXPOSE 8081
+LABEL org.opencontainers.image.description A simple rest api that returns time information
+
+# FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
+WORKDIR /src
+COPY ["TimeApi/TimeApi.csproj", "TimeApi/"]
+RUN dotnet restore "TimeApi/TimeApi.csproj" -r linux-x64
+COPY . .
+WORKDIR "/src/TimeApi"
+RUN dotnet build "TimeApi.csproj" -r linux-x64 -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "TimeApi.csproj" -r linux-x64 -c Release --self-contained true -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+# ENTRYPOINT ["dotnet", "TimeApi.dll"]
+# ENTRYPOINT [ "./TimeApi", "--urls", "http://0.0.0.0:8080" ]
+# ENTRYPOINT [ "./TimeApi" ]
+ENTRYPOINT [ "ls", "-l" ]

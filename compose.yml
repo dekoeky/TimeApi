@@ -1,0 +1,49 @@
+services:
+
+  default:
+    image: timeapi:default
+    build:
+      context: .
+      dockerfile: TimeApi/Dockerfile.default
+    ports:
+      - 5000:8080
+    # volumes:
+    #   - /etc/localtime:/etc/localtime:ro
+    environment:
+      TZ: Europe/Brussels
+
+  a:
+    image: timeapi:original
+    build:
+      context: .
+      dockerfile: TimeApi/Dockerfile.original
+    ports:
+      - 5001:8080
+
+  b:
+    image: timeapi:dev-alpine
+    build:
+      context: .
+      dockerfile: TimeApi/Dockerfile.alpinedotnet
+    ports:
+      - 5002:8080
+
+  c:
+    image: timeapi:clean-alpine
+    build:
+      context: .
+      dockerfile: TimeApi/Dockerfile.cleanalpine
+    ports:
+      - 5003:8080
+
+  xxx:
+    image: timeapi:default
+    build:
+      context: .
+      dockerfile: TimeApi/Dockerfile.default
+    # volumes:
+    #   - /etc/localtime:/etc/localtime:ro
+    # environment:
+    #   TZ: Europe/Brussels
+    entrypoint: ["zdump", "/etc/localtime"]
+    # entrypoint: ["/bin/sh"]
